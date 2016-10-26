@@ -1,6 +1,9 @@
 
 $(function(){
 
+  var stockPrice 
+
+  // Collect closing stock price
   function stockPrice(){ 
     $.ajax({
       url: 'http://finance.google.com/finance/info?client=ig&q=NASDAQ:GOOG',
@@ -23,7 +26,9 @@ $(function(){
 
     
       $('.stock-price').html('')
-      console.log('this')
+      // console.log('this')
+      stockPrice = hashStock['l']
+      console.log(hashStock)
       $('.stock-price').html(hashStock['l'])
     
 
@@ -35,42 +40,49 @@ $(function(){
   stockPrice();
 
 
+  function option_stock(){
+    $.ajax({
+      url: "https://www.google.com/finance/option_chain?q=NASDAQ:GOOG&expd=16&expm=12&expy=2016&output=json",
+      method: 'GET',
+      data: {},
+      dataType: 'text'
+    }).done(function(data){
+      // console.log(data)
 
-  $.ajax({
-    url: "https://www.google.com/finance/option_chain?q=NASDAQ:GOOG&expd=16&expm=12&expy=2016&output=json",
-    method: 'GET',
-    data: {},
-    dataType: 'text'
-  }).done(function(data){
-    // console.log(data)
+      var myJSONtext = data
+      newData = eval('(' + myJSONtext + ')')
 
-    var myJSONtext = data
-    newData = eval('(' + myJSONtext + ')')
+      // console.log(newData)
+      calls = newData['calls']
+      puts = newData['puts']
 
-    // console.log(newData)
-    calls = newData['calls']
-    puts = newData['puts']
+      // find 5 above and 5 bellow
+      // stockPrice
+      $('.puts-data').html('')
 
+      for(var i = 0, l = calls.length; i < l; i++){
+        // console.log(calls[i])
+        // console.log(puts[i])
 
-
-    for(var i = 0, l = calls.length; i < l; i++){
-      // console.log(calls[i])
-      // console.log(puts[i])
-            
-      $('<li>').html('Strike:' + calls[i]['strike'] + ' Price: '+ calls[i]['p'] + ' Bid: ' + calls[i]['b'] + " Bid/Strike: " + Math.round((calls[i]['b']/calls[i]['strike'] + 0.00001) * 100) / 100).appendTo('.calls-data')
-      $('<li>').html('Strike:'+ puts[i]['strike'] + ' Price: ' + puts[i]['p'] + ' Bid: ' + puts[i]['b'] + " Bid/Strike: " + Math.round((puts[i]['b']/puts[i]['strike'] + 0.00001) * 100) / 100 ).appendTo('.puts-data')
-    }
-
-
-
-
-  }).fail(function(){
-    console.log('this failed')
-  })
+        // collect annual bid/strike
+        annualBS = puts[i]['b']/puts[i]['strike']
+              
+        $('<li>').html('Strike:'+ puts[i]['strike'] + ' Premium: ' + puts[i]['b'] + " Payout: " + Math.round((puts[i]['b']/puts[i]['strike'] + 0.00001) * 100) / 100 ).appendTo('.puts-data')
+      }
 
 
 
+
+    }).fail(function(){
+      console.log('this failed')
+    })
+    setTimeout(option_stock, 5000)
+  }
+  option_stock()
 });
+
+
+// 'http://chartapi.finance.yahoo.com/instrument/1.0/'+ tickerSym +'/chartdata;type=quote;range=1y/csv'
 
 
 
