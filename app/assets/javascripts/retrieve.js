@@ -1,4 +1,3 @@
-
 $(function(){
 
   var stockPrice 
@@ -28,7 +27,7 @@ $(function(){
       $('.stock-price').html('')
       // console.log('this')
       stockPrice = hashStock['l']
-      console.log(hashStock)
+      // console.log(hashStock)
       $('.stock-price').html(hashStock['l'])
     
 
@@ -67,7 +66,9 @@ $(function(){
         // collect annual bid/strike
         annualBS = puts[i]['b']/puts[i]['strike']
               
-        $('<li>').html('Strike:'+ puts[i]['strike'] + ' Premium: ' + puts[i]['b'] + " Payout: " + Math.round((puts[i]['b']/puts[i]['strike'] + 0.00001) * 100) / 100 ).appendTo('.puts-data')
+        $('<li>').html('Strike:'+ puts[i]['strike'] + ' Premium: ' + puts[i]['b'] + 
+          " Payout: " + Math.round((puts[i]['b']/puts[i]['strike'] + 0.00001) * 100) / 100 
+          ).appendTo('.puts-data')
       }
 
 
@@ -79,6 +80,21 @@ $(function(){
     setTimeout(option_stock, 5000)
   }
   option_stock()
+
+
+  $.ajax({
+    url: 'http://chartapi.finance.yahoo.com/instrument/1.0/GOOG/chartdata;type=quote;range=1m/json',
+    method: 'GET',
+    data: {},
+    dataType: 'jsonp',
+    jsonp: "callback"
+  }).done(function(data){
+    console.log(data)
+
+
+  }).fail(function(){
+    console.log('ajax request for the RSI failed')
+  })
 });
 
 
