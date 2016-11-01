@@ -99,9 +99,36 @@ $(function(){
     dataType: 'jsonp',
     jsonp: "callback"
   }).done(function(data){
+    var closingPrice
+    var priceChangeArr = []
+
     allData = data['series']
+    for(var i = 1, l = allData.length; i < l; i ++){
+      // console.log(allData.length)
+      closingPrice = allData[i]['close']
+      closingPriceChange = allData[i]['close'] - allData[i-1]['close']
+      priceChangeArr.push(closingPriceChange)
+    }
+
+    gainSum = 0.00
+    lossSum = 0.00
+    for(var i = 0; i < priceChangeArr.length; i ++){
+      if (priceChangeArr[i] >= 0){
+        gainSum += priceChangeArr[i]
+      }
+      else{
+        lossSum += priceChangeArr[i]
+      }
+    }
+    var avgGain = gainSum / priceChangeArr.length
+    var avgLoss = Math.abs(lossSum) / priceChangeArr.length
+
+    relativeStrength = avgGain/avgLoss
+    RSI = 100 - (100/(1+relativeStrength))
+    RSI = Math.round(RSI *100)/100
+    $('<div>').html(RSI).attr('class', 'relative-strenth-index').appendTo('.RSI')
+
     
-    console.log(allData[0])
 
 
   }).fail(function(){
@@ -110,7 +137,6 @@ $(function(){
 });
 
 
-// 'http://chartapi.finance.yahoo.com/instrument/1.0/'+ tickerSym +'/chartdata;type=quote;range=1y/csv'
 
 
 
