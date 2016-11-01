@@ -99,7 +99,9 @@ $(function(){
     dataType: 'jsonp',
     jsonp: "callback"
   }).done(function(data){
-    console.log(data)
+    allData = data['series']
+    
+    console.log(allData[0])
 
 
   }).fail(function(){
