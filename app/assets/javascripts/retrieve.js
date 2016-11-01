@@ -26,7 +26,7 @@ $(function(){
     
       $('.stock-price').html('')
       // console.log('this')
-      stockPrice = hashStock['l']
+      stockPrice = parseInt(hashStock['l'])
       // console.log(hashStock)
       $('.stock-price').html(hashStock['l'])
     
@@ -58,17 +58,27 @@ $(function(){
       // find 5 above and 5 bellow
       // stockPrice
       $('.puts-data').html('')
+      // console.log(stockPrice)
 
       for(var i = 0, l = calls.length; i < l; i++){
         // console.log(calls[i])
         // console.log(puts[i])
 
+        strike = parseInt(puts[i]['strike'])
+        premium = parseInt(puts[i]['b'])
+        // console.log(typeof(strike))
+        // console.log(stockPrice + 20)
+        if(  strike > stockPrice - 50 && strike < stockPrice + 50 ){
+
         // collect annual bid/strike
-        annualBS = puts[i]['b']/puts[i]['strike']
-              
-        $('<li>').html('Strike:'+ puts[i]['strike'] + ' Premium: ' + puts[i]['b'] + 
-          " Payout: " + Math.round((puts[i]['b']/puts[i]['strike'] + 0.00001) * 100) / 100 
-          ).appendTo('.puts-data')
+
+          annualBS = premium/strike
+
+                
+          $('<li>').html('Strike:'+ strike + ' Premium: ' + premium + 
+            " Payout: " + Math.round((premium/strike + 0.00001) * 100) / 100 
+            ).appendTo('.puts-data')
+        }
       }
 
 
