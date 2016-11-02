@@ -82,7 +82,8 @@ $(function(){
 
                 
           $('<li>').html('Strike:'+ strike + ' Premium: ' + premium + 
-            " Payout: " + Math.round((premium/strike + 0.00001) * 100) / 100 + " Annual Payout"
+            " Payout: " + Math.round((premium/strike + 0.00001) * 100) / 100 + " Annual Payout: " +
+            Math.round( (  ((premium/strike) * 365 /44) + 0.00001 ) *100 )/100 
             ).appendTo('.puts-data')
         }
       }
