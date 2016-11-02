@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Stocks</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Exchange symbol</th>
+      <th>Stock symbol</th>
+      <th>Option day</th>
+      <th>Option month</th>
+      <th>Option year</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @stocks.each do |stock| %>
+      <tr>
+        <td><%= stock.exchange_symbol %></td>
+        <td><%= stock.stock_symbol %></td>
+        <td><%= stock.option_day %></td>
+        <td><%= stock.option_month %></td>
+        <td><%= stock.option_year %></td>
+        <td><%= link_to 'Show', stock %></td>
+        <td><%= link_to 'Edit', edit_stock_path(stock) %></td>
+        <td><%= link_to 'Destroy', stock, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Stock', new_stock_path %>

@@ -1,0 +1,44 @@
+<%= form_for(stock) do |f| %>
+  <% if stock.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(stock.errors.count, "error") %> prohibited this stock from being saved:</h2>
+
+      <ul>
+      <% stock.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :exchange_symbol %>
+    <%= f.text_field :exchange_symbol , placeholder: "Ex. NASDAQ"%>
+  </div>
+
+  <div class="field">
+    <%= f.label :stock_symbol %>
+    <%= f.text_field :stock_symbol, placeholder: "Ex. GOOG" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :option_day %>
+    <%= f.number_field :option_day, min: 1, max: 31  %>
+  </div>
+
+  <div class="field">
+    <%= f.label :option_month %>
+    <%= f.number_field :option_month, min:1, max: 12 %>
+
+  </div>
+
+  <div class="field">
+    <%= f.label :option_year %>
+    <%# f.number_field :option_year %>
+    <%= f.select :option_year, (Time.zone.now.year) .. (Time.zone.now.year + 2) %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

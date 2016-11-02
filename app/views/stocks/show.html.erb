@@ -1,0 +1,38 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Exchange_symbol:</strong>
+  <%= @stock.exchange_symbol %>
+</p>
+
+<p>
+  <strong>Stock_symbol:</strong>
+  <%= @stock.stock_symbol %>
+</p>
+
+<p>
+  <strong>Option_day:</strong>
+  <%= @stock.option_day %>
+</p>
+
+<p>
+  <strong>Option_month:</strong>
+  <%= @stock.option_month %>
+</p>
+
+<p>
+  <strong>Option_year:</strong>
+  <%= @stock.option_year %>
+</p>
+
+<%= link_to 'Edit', edit_stock_path(@stock) %> |
+<%= link_to 'Back', stocks_path %>
+
+<div class = 'stock-price'></div>
+
+<h3>Puts</h3>
+<ul class = "payout-days"></ul>
+<div class = 'puts-data'></div>
+
+<h3>RSI calculations</h3>
+<div class = "RSI"></div>

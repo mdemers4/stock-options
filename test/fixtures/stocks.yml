@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  exchange-symbol: MyString
+  stock-symbol: MyString
+  option-day: 1
+  option-month: 1
+  option-year: 1
+
+two:
+  exchange-symbol: MyString
+  stock-symbol: MyString
+  option-day: 1
+  option-month: 1
+  option-year: 1
