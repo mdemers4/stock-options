@@ -48,7 +48,12 @@ $(function(){
     }).done(function(data){
       // console.log(data)
       var today = new Date();
-
+      var optionDate = new Date("12/16/2016"); // replace with (m + "/" + d + "/" + y);
+      var timeDiff = Math.abs(optionDate.getTime() - today.getTime());
+      // console.log(timeDiff);
+      var dayDiff = Math.ceil(timeDiff / (1000 *3600 *24))
+      $('.payout-days').html("Payout is calculated for " + dayDiff + " days")
+      // console.log(dayDiff)
       var myJSONtext = data
       newData = eval('(' + myJSONtext + ')')
 
@@ -77,7 +82,7 @@ $(function(){
 
                 
           $('<li>').html('Strike:'+ strike + ' Premium: ' + premium + 
-            " Payout: " + Math.round((premium/strike + 0.00001) * 100) / 100 
+            " Payout: " + Math.round((premium/strike + 0.00001) * 100) / 100 + " Annual Payout"
             ).appendTo('.puts-data')
         }
       }
@@ -88,7 +93,7 @@ $(function(){
     }).fail(function(){
       console.log('this failed')
     })
-    setTimeout(option_stock, 5000)
+    setTimeout(option_stock, 10000)
   }
   option_stock()
 
