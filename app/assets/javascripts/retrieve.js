@@ -47,6 +47,7 @@ $(function(){
       dataType: 'text'
     }).done(function(data){
       // console.log(data)
+      var today = new Date();
 
       var myJSONtext = data
       newData = eval('(' + myJSONtext + ')')
